@@ -103,6 +103,19 @@ app.post('/api/addCategoryEditor', (req, res) => {
     })()
 });
 
+app.post('/api/addPoll', (req, res) => {
+    (async () => {
+        try {
+            await db.collection('polls').doc(req.body.id).set(Object.assign({}, req.body)).then(
+                () => {
+                    return res.status(200).send({message : 'ok'});
+                });
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    })()
+});
+
 app.get('/api/getReport', (req, res) => {
     (async () => {
         try {
