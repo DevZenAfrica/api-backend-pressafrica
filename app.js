@@ -116,6 +116,44 @@ app.post('/api/addPoll', (req, res) => {
     })()
 });
 
+app.get('/api/getUsers', (req, res) => {
+    (async () => {
+        try {
+            let reponse = [];
+
+            await db.collection('comptes').get().then(querysnapshot=>{
+                let docs = querysnapshot.docs;
+
+                for(let doc of docs) {
+                    reponse.push(doc.data());
+                }
+                return res.status(200).send(reponse);
+            })
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    })()
+});
+
+app.get('/api/getLogs', (req, res) => {
+    (async () => {
+        try {
+            let reponse = [];
+
+            await db.collection('logs-events').get().then(querysnapshot=>{
+                let docs = querysnapshot.docs;
+
+                for(let doc of docs) {
+                    reponse.push(doc.data());
+                }
+                return res.status(200).send(reponse);
+            })
+        } catch (error) {
+            return res.status(500).send(error);
+        }
+    })()
+});
+
 app.get('/api/getReport', (req, res) => {
     (async () => {
         try {
